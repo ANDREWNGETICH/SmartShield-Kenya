@@ -65,3 +65,23 @@ button:hover {
     background: #334155;
     border-radius: 8px;
 }
+
+.high-risk {
+    color: red;
+    font-weight: bold;
+}
+
+.medium-risk {
+    color: orange;
+    font-weight: bold;
+}
+
+.low-risk {
+    color: yellow;
+    font-weight: bold;
+}
+
+.safe-risk {
+    color: lightgreen;
+    font-weight: bold;
+}

@@ -23,10 +23,12 @@ def detect():
     ai_prediction = predict_message(message)
 
     return jsonify({
-        "status": keyword_result["status"],
-        "keywords": keyword_result["keywords"],
-        "ai_prediction": ai_prediction
-    })
+    "status": keyword_result["status"],
+    "keywords": keyword_result["keywords"],
+    "risk_score": keyword_result["risk_score"],
+    "threat_level": keyword_result["threat_level"],
+    "ai_prediction": ai_prediction
+})
 
 if __name__ == '__main__':
     app.run(debug=True)

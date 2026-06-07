@@ -29,6 +29,29 @@
     </p>
 
     <p>
+    <strong>Threat Level:</strong>
+
+    <span class="${
+        data.threat_level === 'HIGH'
+            ? 'high-risk'
+            : data.threat_level === 'MEDIUM'
+            ? 'medium-risk'
+            : data.threat_level === 'LOW'
+            ? 'low-risk'
+            : 'safe-risk'
+    }">
+
+        ${data.threat_level}
+
+    </span>
+</p>
+
+    <p>
+        <strong>Risk Score:</strong>
+        ${data.risk_score}%
+    </p>
+
+    <p>
         <strong>Detected Keywords:</strong>
         ${data.keywords.join(", ")}
     </p>
