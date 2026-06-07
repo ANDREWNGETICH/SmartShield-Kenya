@@ -1,59 +1,90 @@
-    async function analyzeMessage() {
+async function analyzeMessage() {
 
     const message =
         document.getElementById("messageInput").value;
 
-    const response = await fetch(
-        "http://127.0.0.1:5000/detect",
-        {
-            method: "POST",
+    try {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+        const response = await fetch(
+            "http://127.0.0.1:5000/detect",
+            {
+                method: "POST",
 
-            body: JSON.stringify({
-                message: message
-            })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    message: message
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        let keywords = "None";
+
+        if (data.keywords && data.keywords.length > 0) {
+            keywords = data.keywords.join(", ");
         }
-    );
 
-    const data = await response.json();
+        let riskClass = "safe-risk";
 
- document.getElementById("resultBox").innerHTML = `
-    <h3>Status: ${data.status}</h3>
+        if (data.threat_level === "HIGH") {
+            riskClass = "high-risk";
+        }
+        else if (data.threat_level === "MEDIUM") {
+            riskClass = "medium-risk";
+        }
+        else if (data.threat_level === "LOW") {
+            riskClass = "low-risk";
+        }
 
-    <p>
-        <strong>AI Prediction:</strong>
-        ${data.ai_prediction}
-    </p>
+        document.getElementById("resultBox").innerHTML = `
+            <h3>Status: ${data.status}</h3>
 
-    <p>
-    <strong>Threat Level:</strong>
+            <p>
+                <strong>AI Prediction:</strong>
+                ${data.ai_prediction}
+            </p>
 
-    <span class="${
-        data.threat_level === 'HIGH'
-            ? 'high-risk'
-            : data.threat_level === 'MEDIUM'
-            ? 'medium-risk'
-            : data.threat_level === 'LOW'
-            ? 'low-risk'
-            : 'safe-risk'
-    }">
+            <p>
+                <strong>Kenyan Scam Intelligence:</strong>
+                ${data.kenyan_detected ? "Detected" : "Not Detected"}
+            </p>
 
-        ${data.threat_level}
+            <p>
+                <strong>Scam Category:</strong>
+                ${data.kenyan_category}
+            </p>
 
-    </span>
-</p>
+            <p>
+                <strong>Threat Level:</strong>
 
-    <p>
-        <strong>Risk Score:</strong>
-        ${data.risk_score}%
-    </p>
+                <span class="${riskClass}">
+                    ${data.threat_level}
+                </span>
+            </p>
 
-    <p>
-        <strong>Detected Keywords:</strong>
-        ${data.keywords.join(", ")}
-    </p>
-`;
+            <p>
+                <strong>Risk Score:</strong>
+                ${data.risk_score}%
+            </p>
+
+            <p>
+                <strong>Detected Keywords:</strong>
+                ${keywords}
+            </p>
+        `;
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("resultBox").innerHTML = `
+            <p style="color:red;">
+                Error connecting to SmartShield backend.
+            </p>
+        `;
+    }
 }

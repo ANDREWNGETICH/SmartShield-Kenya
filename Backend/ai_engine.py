@@ -1,14 +1,23 @@
 import pandas as pd
+import os
 
 from sklearn.feature_extraction.text import CountVectorizer
-
-from sklearn.model_selection import train_test_split
-
 from sklearn.naive_bayes import MultinomialNB
 
 
+# Get current file directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Build dataset path
+dataset_path = os.path.join(
+    BASE_DIR,
+    "..",
+    "datasets",
+    "messages.csv"
+)
+
 # Load dataset
-data = pd.read_csv("../datasets/messages.csv")
+data = pd.read_csv(dataset_path)
 
 
 # Split features and labels
