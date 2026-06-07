@@ -5,6 +5,12 @@ async function analyzeMessage() {
 
     try {
 
+        document.getElementById("resultBox").innerHTML = `
+    <p style="color:#38bdf8;">
+        AI scanning threat...
+    </p>
+`;
+
         const response = await fetch(
             "http://127.0.0.1:5000/detect",
             {
@@ -41,41 +47,44 @@ async function analyzeMessage() {
         }
 
         document.getElementById("resultBox").innerHTML = `
-            <h3>Status: ${data.status}</h3>
 
-            <p>
-                <strong>AI Prediction:</strong>
-                ${data.ai_prediction}
-            </p>
+    <div class="threat-card ${riskClass}">
 
-            <p>
-                <strong>Kenyan Scam Intelligence:</strong>
-                ${data.kenyan_detected ? "Detected" : "Not Detected"}
-            </p>
+        <h2 class="threat-status">
+            ${data.status}
+        </h2>
 
-            <p>
-                <strong>Scam Category:</strong>
-                ${data.kenyan_category}
-            </p>
+        <div class="threat-badge">
+            ${data.threat_level} RISK
+        </div>
 
-            <p>
-                <strong>Threat Level:</strong>
+        <p>
+            <strong>AI Prediction:</strong>
+            ${data.ai_prediction}
+        </p>
 
-                <span class="${riskClass}">
-                    ${data.threat_level}
-                </span>
-            </p>
+        <p>
+            <strong>Kenyan Scam Intelligence:</strong>
+            ${data.kenyan_detected ? "Detected" : "Not Detected"}
+        </p>
 
-            <p>
-                <strong>Risk Score:</strong>
-                ${data.risk_score}%
-            </p>
+        <p>
+            <strong>Scam Category:</strong>
+            ${data.kenyan_category}
+        </p>
 
-            <p>
-                <strong>Detected Keywords:</strong>
-                ${keywords}
-            </p>
-        `;
+        <p>
+            <strong>Risk Score:</strong>
+            ${data.risk_score}%
+        </p>
+
+        <p>
+            <strong>Detected Keywords:</strong>
+            ${keywords}
+        </p>
+
+    </div>
+`;
 
     } catch (error) {
 

@@ -1,3 +1,4 @@
+from history import add_scan, get_history
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -34,6 +35,13 @@ def detect():
         keyword_result["threat_level"]
     )
 
+    add_scan(
+    message,
+    ai_prediction,
+    keyword_result["threat_level"],
+    keyword_result["risk_score"]
+)
+
     return jsonify({
         "status": keyword_result["status"],
         "keywords": keyword_result["keywords"],
@@ -50,6 +58,11 @@ def analytics():
 
     return jsonify(get_analytics())
 
+
+@app.route('/history', methods=['GET'])
+def history():
+
+    return jsonify(get_history())
 
 if __name__ == '__main__':
     app.run(debug=True)
