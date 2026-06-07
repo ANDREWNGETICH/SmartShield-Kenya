@@ -37,9 +37,9 @@ def detect_scam(message):
 
 
     # Determine threat level
-    if risk_score >= 70:
+    if risk_score >= 50:
         threat_level = "HIGH"
-
+    
     elif risk_score >= 40:
         threat_level = "MEDIUM"
 
