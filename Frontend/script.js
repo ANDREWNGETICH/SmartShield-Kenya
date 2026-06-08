@@ -50,17 +50,43 @@ async function analyzeMessage() {
 
     <div class="threat-card ${riskClass}">
 
-        <h2 class="threat-status">
-            ${data.status}
+       <h2 class="threat-status">
+
+            ${
+                data.threat_level === "HIGH"
+                ? "⚠ HIGH RISK THREAT"
+
+                : data.threat_level === "MEDIUM"
+                ? "⚡ MEDIUM RISK"
+
+                : data.threat_level === "LOW"
+                ? "🟡 LOW RISK"
+
+                : "✅ SAFE MESSAGE"
+            }
+
         </h2>
 
         <div class="threat-badge">
             ${data.threat_level} RISK
         </div>
+        <div class="risk-meter">
+
+            <div
+                class="risk-fill ${riskClass}"
+                style="width:${data.risk_score}%">
+            </div>
+
+        </div>
 
         <p>
             <strong>AI Prediction:</strong>
             ${data.ai_prediction}
+        </p>
+
+        <p>
+            <strong>AI Confidence:</strong>
+            ${data.confidence_score}%
         </p>
 
         <p>
@@ -72,6 +98,10 @@ async function analyzeMessage() {
             <strong>Scam Category:</strong>
             ${data.kenyan_category}
         </p>
+        
+        <div class="category-badge">
+            ${data.kenyan_category}
+        </div>
 
         <p>
             <strong>Risk Score:</strong>
@@ -84,6 +114,7 @@ async function analyzeMessage() {
         </p>
 
     </div>
+
 `;
 
     } catch (error) {

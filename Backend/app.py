@@ -43,6 +43,10 @@ def detect():
 )
 
     return jsonify({
+        "confidence_score": min(
+    keyword_result["risk_score"] + 10,
+    99
+),
         "status": keyword_result["status"],
         "keywords": keyword_result["keywords"],
         "risk_score": keyword_result["risk_score"],
@@ -50,6 +54,7 @@ def detect():
         "ai_prediction": ai_prediction,
         "kenyan_detected": kenya_result["detected"],
         "kenyan_category": kenya_result["category"]
+        
     })
 
 

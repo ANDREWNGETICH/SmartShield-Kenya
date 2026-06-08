@@ -19,6 +19,10 @@ dataset_path = os.path.join(
 # Load dataset
 data = pd.read_csv(dataset_path)
 
+print("Dataset Loaded Successfully")
+print(data.head())
+print("Dataset Size:", len(data))
+
 
 # Split features and labels
 X = data["message"]
